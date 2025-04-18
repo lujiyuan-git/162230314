@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions[表情]eckout@v4
+
+      - name: Set up JDK 17
+        uses: actions[表情]tup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn -B clean package
+
+      - name: Run Smoke Tests
+        run: mvn -B test
+        env:
+          MAVEN_OPTS: -Dtest=SmokeTestSuite # 指定冒烟测试套件
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports/
