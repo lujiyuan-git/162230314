@@ -10,7 +10,7 @@ public class StringUtils {
     // 判断字符串是否为空（null或长度为0）
     public static boolean isEmpty(final CharSequence cs) {
         return cs == null || cs.length() == 0
-//                || cs.length() == 1
+                || cs.length() == 1
                 ;
     }
 
